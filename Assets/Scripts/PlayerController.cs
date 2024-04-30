@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour
         transform.Rotate(Vector3.up * horizontalInput * rotationSpeed * Time.deltaTime);
         transform.Translate(Vector3.down * 5.0f * Time.deltaTime);
         heightText.text = "Height: " + (int)transform.position.y;
-        
     }
 
 

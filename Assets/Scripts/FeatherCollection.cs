@@ -6,13 +6,15 @@ using UnityEngine;
 public class FeatherCollection : MonoBehaviour
 {
     private int featherCount = 0;
-
     public TextMeshProUGUI featherText;
+    private AudioSource audioSource;
+    public AudioClip featherSound;
+    public AudioClip completeSound;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -28,6 +30,14 @@ public class FeatherCollection : MonoBehaviour
             Destroy(other.gameObject);
             featherCount++;
             featherText.text = "Feather: " + featherCount + "/10";
+            if (featherCount == 10)
+            {
+                audioSource.PlayOneShot(completeSound);
+            }
+            else
+            {
+                audioSource.PlayOneShot(featherSound);
+            }
         }
     }
 }
