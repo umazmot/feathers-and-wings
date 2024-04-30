@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private float sensitivity = 50.0f;
-
+    private float sensitivity = 100.0f;
     public GameObject player;
 
     // Start is called before the first frame update
@@ -17,8 +16,9 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void  LateUpdate()
     {
-        transform.Translate(Vector3.up * Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime);
+        //transform.Translate(Vector3.down * Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime);
+        //transform.LookAt(player.transform);
 
-        transform.LookAt(player.transform);
+        transform.Rotate(-Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime, 0, 0);
     }
 }

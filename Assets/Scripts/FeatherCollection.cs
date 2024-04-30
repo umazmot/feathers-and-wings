@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FeatherCollection : MonoBehaviour
 {
-    private int featherCount = 0;
+    public int featherCount = 0;
     public TextMeshProUGUI featherText;
     private AudioSource audioSource;
     public AudioClip featherSound;

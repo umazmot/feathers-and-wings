@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private float verticalInput;
     private float horizontalInput;
     public TextMeshProUGUI heightText;
+    private float fallSpeed = 5.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +25,14 @@ public class PlayerController : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         transform.Translate(Vector3.forward * verticalInput * speed * Time.deltaTime);
         transform.Rotate(Vector3.up * horizontalInput * rotationSpeed * Time.deltaTime);
-        transform.Translate(Vector3.down * 5.0f * Time.deltaTime);
+        if (transform.position.y <= fallSpeed)
+        {
+            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        }
+        else
+        {
+            transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
+        }
         heightText.text = "Height: " + (int)transform.position.y;
     }
 
