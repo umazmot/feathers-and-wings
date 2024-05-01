@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI heightText;
     private float fallSpeed = 5.0f;
     private FeatherCollection featherScript;
+    private bool isGameOver = false;
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +38,10 @@ public class PlayerController : MonoBehaviour
             // 下に移動
             else if (Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.DownArrow))
             {
-                transform.Translate(Vector3.down * speed * Time.deltaTime);
+                if(!isGameOver)
+                {
+                    transform.Translate(Vector3.down * speed * Time.deltaTime);
+                }
             }
             // 横に移動
             else
@@ -57,11 +61,7 @@ public class PlayerController : MonoBehaviour
             // 方向転換
             transform.Rotate(Vector3.up * horizontalInput * rotationSpeed * Time.deltaTime);
             // 落下
-            if (transform.position.y <= fallSpeed)
-            {
-                transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-            }
-            else
+            if (!isGameOver)
             {
                 transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
             }
@@ -69,5 +69,11 @@ public class PlayerController : MonoBehaviour
         heightText.text = "Height: " + (int)transform.position.y;
     }
 
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.tag == "Ground")
+        {
+            isGameOver = true;
+        }
+    }
 }

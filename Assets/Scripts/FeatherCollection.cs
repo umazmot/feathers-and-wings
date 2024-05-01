@@ -17,6 +17,7 @@ public class FeatherCollection : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        featherText.text = "Feather: " + featherCount + "/" + feathersToCollect;
     }
 
     // Update is called once per frame
