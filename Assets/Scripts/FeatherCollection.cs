@@ -12,12 +12,15 @@ public class FeatherCollection : MonoBehaviour
     public AudioClip completeSound;
     public bool isComplete = false;
     public int feathersToCollect = 10;
+    public TextMeshProUGUI uiText1;
+    public TextMeshProUGUI uiText2;
 
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         featherText.text = "Feather: " + featherCount + "/" + feathersToCollect;
+        uiText2.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -37,6 +40,8 @@ public class FeatherCollection : MonoBehaviour
             {
                 audioSource.PlayOneShot(completeSound);
                 isComplete = true;
+                uiText1.gameObject.SetActive(false);
+                uiText2.gameObject.SetActive(true);
             }
             else
             {

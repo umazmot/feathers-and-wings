@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class QuitScript : MonoBehaviour
 {
@@ -21,6 +22,10 @@ public class QuitScript : MonoBehaviour
         if (Input.GetKey("escape")) //Hit escape on the keyboard to quit out of exe instead of ALT + F4
         {
             Application.Quit();
+        }
+        if (Input.GetKeyDown("r"))
+        {
+            SceneManager.LoadScene(0);
         }
     }
 }
