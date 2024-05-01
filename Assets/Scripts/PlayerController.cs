@@ -6,32 +6,65 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private float speed = 30.0f;
-    private float rotationSpeed = 100.0f;
+    private float rotationSpeed = 200.0f;
     private float verticalInput;
     private float horizontalInput;
     public TextMeshProUGUI heightText;
     private float fallSpeed = 5.0f;
+    private FeatherCollection featherScript;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        featherScript = GetComponent<FeatherCollection>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        verticalInput = Input.GetAxis("Vertical");
+        // 入力X成分
         horizontalInput = Input.GetAxis("Horizontal");
-        transform.Translate(Vector3.forward * verticalInput * speed * Time.deltaTime);
-        transform.Rotate(Vector3.up * horizontalInput * rotationSpeed * Time.deltaTime);
-        if (transform.position.y <= fallSpeed)
+        // 入力Z成分
+        verticalInput = Input.GetAxis("Vertical");
+
+        if (featherScript.isComplete)
         {
-            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            // 上に移動
+            if (Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.UpArrow))
+            {
+                transform.Translate(Vector3.up * speed * Time.deltaTime);
+            }
+            // 下に移動
+            else if (Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.DownArrow))
+            {
+                transform.Translate(Vector3.down * speed * Time.deltaTime);
+            }
+            // 横に移動
+            else
+            {
+                // 移動ベクトル
+                Vector3 dir = new Vector3(horizontalInput * speed * Time.deltaTime, 0, verticalInput * speed * Time.deltaTime);
+                // 移動
+                transform.position += dir;
+                // 方向転換
+                transform.forward = Vector3.Slerp(transform.forward, dir, speed * Time.deltaTime);
+            }
         }
         else
         {
-            transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
+            // 前進
+            transform.Translate(Vector3.forward * verticalInput * speed * Time.deltaTime);
+            // 方向転換
+            transform.Rotate(Vector3.up * horizontalInput * rotationSpeed * Time.deltaTime);
+            // 落下
+            if (transform.position.y <= fallSpeed)
+            {
+                transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            }
+            else
+            {
+                transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
+            }
         }
         heightText.text = "Height: " + (int)transform.position.y;
     }

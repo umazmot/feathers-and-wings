@@ -17,13 +17,13 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        featherScript = GameObject.FindGameObjectWithTag("Player").GetComponent<FeatherCollection>();
+        featherScript = player.GetComponent<FeatherCollection>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (featherScript.featherCount >= 10)
+        if (featherScript.isComplete)
         {
             return;
         }

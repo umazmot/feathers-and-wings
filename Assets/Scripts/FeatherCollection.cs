@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class FeatherCollection : MonoBehaviour
 {
-    public int featherCount = 0;
+    private int featherCount = 0;
     public TextMeshProUGUI featherText;
     private AudioSource audioSource;
     public AudioClip featherSound;
     public AudioClip completeSound;
+    public bool isComplete = false;
+    public int feathersToCollect = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -29,10 +31,11 @@ public class FeatherCollection : MonoBehaviour
         {
             Destroy(other.gameObject);
             featherCount++;
-            featherText.text = "Feather: " + featherCount + "/10";
-            if (featherCount == 10)
+            featherText.text = "Feather: " + featherCount + "/" + feathersToCollect;
+            if (featherCount == feathersToCollect)
             {
                 audioSource.PlayOneShot(completeSound);
+                isComplete = true;
             }
             else
             {
