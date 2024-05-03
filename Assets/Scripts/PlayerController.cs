@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("isDropping", true);
             }
             // 横に移動
-            else if (horizontalInput != 0 || verticalInput != 0)
+            else if ((horizontalInput != 0 || verticalInput != 0) && !Input.GetKey(KeyCode.Space))
             {
                 // 移動ベクトル
                 Vector3 dir = new Vector3(horizontalInput * speed * Time.deltaTime, 0, verticalInput * speed * Time.deltaTime);

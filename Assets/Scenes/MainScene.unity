@@ -596,7 +596,7 @@ MonoBehaviour:
   featherSound: {fileID: 8300000, guid: 70912e5ab6a5f44629689001f3c61cc7, type: 3}
   completeSound: {fileID: 8300000, guid: 6197d3c3e3a484939a6169b07c80cbcd, type: 3}
   isComplete: 0
-  feathersToCollect: 2
+  feathersToCollect: 7
   uiText1: {fileID: 272748019}
   uiText2: {fileID: 689974475}
 --- !u!114 &484144303
