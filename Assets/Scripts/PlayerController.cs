@@ -34,12 +34,13 @@ public class PlayerController : MonoBehaviour
 
         if (featherScript.isComplete)
         {
+            animator.SetBool("isFalling", false);
             // 上に移動
             if (Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.UpArrow))
             {
                 transform.Translate(Vector3.up * speed * Time.deltaTime);
                 onGround = false;
-                animator.SetBool("isFlying", false);
+                animator.SetBool("isRising", true);
             }
             // 下に移動
             else if (Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.DownArrow))
@@ -48,7 +49,7 @@ public class PlayerController : MonoBehaviour
                 {
                     transform.Translate(Vector3.down * speed * Time.deltaTime);
                 }
-                animator.SetBool("isFlying", false);
+                animator.SetBool("isDropping", true);
             }
             // 横に移動
             else if (horizontalInput != 0 || verticalInput != 0)
@@ -64,6 +65,8 @@ public class PlayerController : MonoBehaviour
             // 休憩中
             else
             {
+                animator.SetBool("isRising", false);
+                animator.SetBool("isDropping", false);
                 animator.SetBool("isFlying", false);
             }
         }
@@ -78,7 +81,6 @@ public class PlayerController : MonoBehaviour
             {
                 transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
             }
-            animator.SetBool("isFlying", true);
         }
         heightText.text = "Height: " + (int)transform.position.y;
     }
@@ -88,10 +90,18 @@ public class PlayerController : MonoBehaviour
         if (other.transform.tag == "Ground")
         {
             onGround = true;
-            if(!featherScript.isComplete)
+            if (!featherScript.isComplete)
             {
                 gameoverText.gameObject.SetActive(true);
             }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.transform.tag == "Ground" && featherScript.isComplete)
+        {
+            onGround = false;
         }
     }
 }
